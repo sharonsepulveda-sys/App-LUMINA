@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+      <h1 class="title">Hello World! </h1>
+      <p id="currentTime"></p>
+      <script src="script.js"></script>
+  </body>
+</html><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMINA - Asesor de Marca Olfativo con IA</title>
+    <!-- Carga de Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de Google Fonts para Playfair Display y Lora --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
+    <!-- Configuración de color y fuente de Tailwind --><script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'lumina-bg': '#F8F4E3',       // Beige muy claro, casi blanco roto
+                        'lumina-card': '#FFFFFF',     // Blanco puro para las tarjetas
+                        'lumina-text': '#5C4033',     // Marrón oscuro para texto principal
+                        'lumina-accent': '#B8860B',   // Dorado medio para acentos y botones
+                        'lumina-highlight': '#DAA520',// Dorado más brillante para hover
+                        'lumina-soft': '#EADDCA',     // Beige suave para elementos secundarios
+                        'slate-grey': '#708090',      // Existente para velas exclusivas
+                        'nude-warm': '#E0C9B3',       // Existente para velas minimalistas
+                        'mint-green': '#A8E6CF',      // Existente para velas relajantes
+                        'vibrant-orange': '#FF8C00',  // Existente para velas vibrantes
+                        'medical-white': '#F0FFFF',   // Blanco médico
+                        'caramel-toast': '#964B00',   // Caramelo tostado
+                    },
+                    fontFamily: {
+                        display: ['"Playfair Display"', 'serif'], // Para títulos grandes
+                        body: ['Lora', 'serif'],                 // Para texto general
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos personalizados heredados y ajustados */
+        .card-shadow {
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 6px 6px -3px rgba(0, 0, 0, 0.03);
+        }
+        .result-candle {
+            transition: transform 0.3s ease-in-out;
+        }
+        .result-candle:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-lumina-bg min-h-screen flex items-center justify-center p-4 font-body text-lumina-text">
+
+    <div id="app" class="w-full max-w-2xl bg-lumina-card rounded-2xl card-shadow p-8 md:p-10">
+
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-extrabold font-display text-lumina-text mb-2">LUMINA</h1>
+            <h2 class="text-2xl text-lumina-accent font-display font-semibold tracking-wide">Asesor Olfativo para tu Marca (Beta IA)</h2>
+            <p class="mt-4 text-lumina-text/80 font-body">Descubre la esencia aromática y visual perfecta para tu marca.</p>
+        </header>
+
+        <div id="quiz-section">
+            <div class="space-y-6">
+
+                <!-- Campo para el nombre de la Marca --><div>
+                    <label for="brand_name" class="block text-lg font-display text-lumina-text mb-2">Nombre de tu Marca:</label>
+                    <input type="text" id="brand_name" class="w-full p-3 border border-lumina-soft rounded-lg focus:ring-lumina-accent focus:border-lumina-accent transition duration-150 bg-lumina-bg text-lumina-text placeholder-lumina-text/60" placeholder="Ej: Éclat Noir">
+                </div>
+
+                <!-- Nuevo: Campo para la descripción de la Marca --><div>
+                    <label for="brand_description" class="block text-lg font-display text-lumina-text mb-2">De qué trata tu marca (Ej: Odontología estética, Pastelería gourmet, etc.):</label>
+                    <textarea id="brand_description" rows="3" class="w-full p-3 border border-lumina-soft rounded-lg focus:ring-lumina-accent focus:border-lumina-accent transition duration-150 bg-lumina-bg text-lumina-text placeholder-lumina-text/60" placeholder="Describe brevemente el nicho o servicio principal de tu negocio. (Opcional)"></textarea>
+                </div>
+                
+                <h3 class="text-xl font-display text-lumina-text pt-4 border-t border-lumina-soft">Preguntas de Estilo Emocional (Si la descripción es vaga):</h3>
+
+                <div>
+                    <label for="style" class="block text-lg font-display text-lumina-text mb-2">1. ¿Cómo describirías el estilo general de tu marca?</label>
+                    <select id="style" class="w-full p-3 border border-lumina-soft rounded-lg focus:ring-lumina-accent focus:border-lumina-accent transition duration-150 bg-lumina-bg text-lumina-text">
+                        <option value="" disabled selected>Selecciona un estilo...</option>
+                        <option value="luxurious">Lujosa / Sofisticada</option>
+                        <option value="minimalist">Minimalista / Simple</option>
+                        <option value="vibrant">Vibrante / Energética</option>
+                        <option value="relaxing">Relajante / Serena</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="emotion" class="block text-lg font-display text-lumina-text mb-2">2. ¿Qué emoción principal deseas que tus clientes sientan?</label>
+                    <select id="emotion" class="w-full p-3 border border-lumina-soft rounded-lg focus:ring-lumina-accent focus:border-lumina-accent transition duration-150 bg-lumina-bg text-lumina-text">
+                        <option value="" disabled selected>Selecciona una emoción...</option>
+                        <option value="exclusivity">Exclusividad / Prestigio</option>
+                        <option value="peace">Paz / Calma</option>
+                        <option value="energy">Energía / Dinamismo</option>
+                        <option value="warmth">Calidez / Cercanía</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="scent_family" class="block text-lg font-display text-lumina-text mb-2">3. ¿Qué familia olfativa te atrae más para tu marca?</label>
+                    <select id="scent_family" class="w-full p-3 border border-lumina-soft rounded-lg focus:ring-lumina-accent focus:border-lumina-accent transition duration-150 bg-lumina-bg text-lumina-text">
+                        <option value="" disabled selected>Selecciona una familia...</option>
+                        <option value="woody">Maderosa (Sándalo, Cedro, Pino)</option>
+                        <option value="floral">Floral (Jazmín, Rosa, Lavanda)</option>
+                        <option value="citrus">Cítrica (Naranja, Limón, Bergamota)</option>
+                        <option value="sweet">Dulce/Gourmand (Vainilla, Canela, Clavo)</option>
+                    </select>
+                </div>
+
+            </div>
+            
+            <button onclick="generateRecommendation()" class="mt-8 w-full bg-lumina-accent text-white font-bold font-display py-3 rounded-lg shadow-md hover:bg-lumina-highlight transition duration-300 transform hover:scale-[1.01]">
+                Generar Recomendación LUMINA
+            </button>
+
+            <p id="error-message" class="text-red-500 text-center mt-4 hidden">Por favor, ingresa el nombre de tu marca y responde al menos las preguntas del Estilo Emocional si la descripción es opcional.</p>
+        </div>
+
+        <div id="result-section" class="hidden">
+            <h3 class="text-3xl font-bold font-display text-lumina-text text-center mb-6">Tu Vela LUMINA Recomendada</h3>
+            
+            <!-- Contenedor para la imagen generada --><div id="candle-image-container" class="mb-6 text-center">
+                <!-- La imagen de la vela se insertará aquí --></div>
+
+            <div class="space-y-4">
+                <div>
+                    <p class="text-sm font-body text-lumina-text/70 uppercase">Emoción Principal</p>
+                    <p id="result-emotion" class="text-xl font-display font-bold text-lumina-accent"></p>
+                </div>
+                <div>
+                    <p class="text-sm font-body text-lumina-text/70 uppercase">Perfil Olfativo (Recomendación IA)</p>
+                    <p id="result-profile" class="text-base font-body text-lumina-text"></p>
+                </div>
+                <!-- Mensaje emotivo --><div class="mt-6 p-4 bg-lumina-soft rounded-lg italic text-lumina-text">
+                    <p id="emotive-message" class="text-lg font-body font-medium"></p>
+                </div>
+            </div>
+
+            <button onclick="resetQuiz()" class="mt-8 w-full border border-lumina-accent text-lumina-accent font-bold font-display py-3 rounded-lg hover:bg-lumina-accent hover:text-white transition duration-300">
+                Reiniciar Encuesta
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function generateRecommendation() {
+            const brandName = document.getElementById('brand_name').value.trim();
+            const brandDescription = document.getElementById('brand_description').value.trim().toLowerCase();
+            const style = document.getElementById('style').value;
+            const emotion = document.getElementById('emotion').value;
+            const scent_family = document.getElementById('scent_family').value;
+            const errorMessage = document.getElementById('error-message');
+
+            if (!brandName || (!brandDescription && (!style || !emotion || !scent_family))) {
+                errorMessage.classList.remove('hidden');
+                return;
+            } else {
+                errorMessage.classList.add('hidden');
+            }
+
+            let recommendation = {
+                colorHex: '',
+                colorName: '',
+                aroma: '',
+                profile: '',
+                emotion: '',
+                emotiveMessage: ''
+            };
+            let customCandleShape = null;
+
+            // ==========================================================
+            // Lógica 1: Recomendación basada en el Nicho de Mercado (Prioridad)
+            // ==========================================================
+
+            if (brandDescription.includes('odontología') || brandDescription.includes('dental') || brandDescription.includes('ortovida') || brandDescription.includes('dientes') || brandDescription.includes('clínica dental')) {
+                // Caso específico: Odontología/Salud
+                customCandleShape = 'en forma de diente o muela, muy limpio y pulido';
+                recommendation.emotion = 'Confianza, Limpieza y Bienestar';
+                recommendation.colorName = 'Blanco Médico Brillante';
+                recommendation.colorHex = '#F0FFFF'; // Azure/White
+                recommendation.aroma = 'Menta Fresca y Eucalipto';
+                recommendation.profile = 'Para tu negocio de odontología, la IA recomienda aromas que simbolicen **Limpieza y Frescura (Menta y Eucalipto)** para reducir la ansiedad. El color Blanco Médico y la forma de muela refuerzan inmediatamente la identidad de marca y la promesa de higiene y confianza.';
+                recommendation.emotiveMessage = `Que la frescura de ${brandName} transmita confianza y una sonrisa brillante, asegurando que cada cliente se sienta en manos expertas.`;
+            } else if (brandDescription.includes('pastelería') || brandDescription.includes('gourmet') || brandDescription.includes('panadería') || brandDescription.includes('dulces') || brandDescription.includes('repostería')) {
+                // Caso específico: Pastelería/Comida
+                customCandleShape = 'en forma de mini pastel (cupcake) o croissant';
+                recommendation.emotion = 'Felicidad, Placer y Deleite Sensorial';
+                recommendation.colorName = 'Caramelo Tostado Brillante';
+                recommendation.colorHex = '#D2691E'; // Chocolate
+                recommendation.aroma = 'Vainilla, Caramelo y Canela';
+                recommendation.profile = 'El objetivo es el deleite. Aromas de **Vainilla, Caramelo y Canela** crean una atmósfera acogedora y apetecible. El color Caramelo Tostado y la forma de pastel invitan a la indulgencia y a la calidez del hogar.';
+                recommendation.emotiveMessage = `Que el dulce aroma de ${brandName} sea el secreto mejor guardado de tus clientes, endulzando cada momento y creando memorias deliciosas.`;
+            } else if (brandDescription.includes('spa') || brandDescription.includes('relax') || brandDescription.includes('masajes') || brandDescription.includes('bienestar')) {
+                 customCandleShape = 'en forma de piedra de río pulida y suave';
+                 recommendation.emotion = 'Relajación Profunda y Armonía';
+                 recommendation.colorName = 'Verde Salvia Calmante';
+                 recommendation.colorHex = '#A2C5A2';
+                 recommendation.aroma = 'Lavanda, Sándalo y Bergamota';
+                 recommendation.profile = 'Para un spa o centro de bienestar, la IA selecciona una combinación de **Lavanda** para la calma, **Sándalo** para la meditación y **Bergamota** para elevar el espíritu. El color Verde Salvia y la forma de piedra pulida inducen a un estado de serenidad y conexión natural.';
+                 recommendation.emotiveMessage = `Que la esencia de ${brandName} purifique tu espíritu y calme tu mente, invitándote a un viaje de total armonía y renovación.`;
+            }
+
+
+            // ==========================================================
+            // Lógica 2: Recomendación por Estilo Emocional (Fallback si no hay Nicho)
+            // ==========================================================
+            
+            if (!customCandleShape) {
+                // Si la IA no encontró un nicho específico, usa el quiz de Estilo/Emoción.
+                customCandleShape = 'en un recipiente de vidrio cilíndrico elegante'; // Forma genérica
+
+                if (style === 'luxurious' || emotion === 'exclusivity') {
+                    recommendation.emotion = 'Exclusividad y Lujo';
+                    recommendation.colorName = 'Gris Pizarra Mate';
+                    recommendation.colorHex = '#708090'; // slate-grey
+                    recommendation.aroma = 'Sándalo y Cedro';
+                    recommendation.profile = 'Tu marca proyecta distinción. Recomendamos una base de maderas nobles como el **Sándalo** o el **Cedro**, con un toque sutil de **Jazmín** para elevar la experiencia. El color Gris Pizarra (o Nude) comunica exclusividad y prestigio.';
+                    recommendation.emotiveMessage = `Que esta luz ilumine el camino de tu prestigio y envuelva a ${brandName} en la aura de inigualable distinción.`;
+                } else if (style === 'minimalist' || emotion === 'peace') {
+                    recommendation.emotion = 'Paz y Simplicidad';
+                    recommendation.colorName = 'Blanco Puro';
+                    recommendation.colorHex = '#F8F8F8'; // Blanco muy suave
+                    recommendation.aroma = 'Vainilla y Canela';
+                    recommendation.profile = 'El minimalismo busca la esencia. Sugerimos la calidez de la **Vainilla** y la **Canela** (aromas dulces) para crear un ambiente acogedor sin saturar. El color Blanco Puro refuerza la simplicidad, la calma y el equilibrio de tu marca.';
+                    recommendation.emotiveMessage = `Que la suave llama de ${brandName} traiga serenidad y claridad, reflejando la pureza de su esencia.`;
+                } else if (style === 'vibrant' || emotion === 'energy') {
+                    recommendation.emotion = 'Energía y Dinamismo';
+                    recommendation.colorName = 'Naranja Vibrante';
+                    recommendation.colorHex = '#FF8C00'; // vibrant-orange
+                    recommendation.aroma = 'Cítricos y Menta';
+                    recommendation.profile = 'Para inyectar vitalidad, la frescura de los **Cítricos** (como Naranja o Limón) mezclada con un toque de **Menta** es ideal. El color Naranja Vibrante estimula la actividad y la alegría.';
+                    recommendation.emotiveMessage = `Que la chispeante energía de ${brandName} encienda la pasión y el dinamismo en cada momento.`;
+                } else if (style === 'relaxing' || emotion === 'warmth') {
+                    recommendation.emotion = 'Serenidad y Bienestar';
+                    recommendation.colorName = 'Verde Menta Suave';
+                    recommendation.colorHex = '#A8E6CF'; // mint-green
+                    recommendation.aroma = 'Lavanda y Manzanilla';
+                    recommendation.profile = 'Buscas un refugio. La **Lavanda** es el clásico de la relajación, complementada con la suavidad herbal de la **Manzanilla**. Un color Verde Menta evoca la naturaleza y la tranquilidad.';
+                    recommendation.emotiveMessage = `Que la calma de ${brandName} te envuelva, creando un santuario de paz y renovación en cada respiro.`;
+                }
+
+                // Ajuste Fino basado en la Familia Olfativa Preferida (Solo si se usó el quiz y no hay nicho)
+                const baseAroma = recommendation.aroma;
+                if (scent_family === 'woody' && !baseAroma.includes('Sándalo') && !baseAroma.includes('Cedro')) {
+                    recommendation.aroma = `Cedro y Pino (Refuerzo Maderoso)`;
+                    recommendation.profile += ' **(Ajuste)**: Ya que tu familia preferida es Maderosa, hemos ajustado la base aromática con más presencia de Cedro y Pino.';
+                } else if (scent_family === 'floral' && !baseAroma.includes('Jazmín') && !baseAroma.includes('Rosa') && !baseAroma.includes('Lavanda')) {
+                    recommendation.aroma = `Jazmín y Rosa (Refuerzo Floral)`;
+                    recommendation.profile += ' **(Ajuste)**: Ya que tu familia preferida es Floral, hemos incorporado notas de Jazmín y Rosa para un toque más sofisticado.';
+                } else if (scent_family === 'citrus' && !baseAroma.includes('Cítricos') && !baseAroma.includes('Naranja') && !baseAroma.includes('Limón')) {
+                    recommendation.aroma = `Bergamota y Lima (Refuerzo Cítrico)`;
+                    recommendation.profile += ' **(Ajuste)**: Ya que tu familia preferida es Cítrica, hemos añadido notas de Bergamota y Lima para un impulso refrescante.';
+                } else if (scent_family === 'sweet' && !baseAroma.includes('Vainilla') && !baseAroma.includes('Canela')) {
+                    recommendation.aroma = `Clavo y Caramelo (Refuerzo Dulce)`;
+                    recommendation.profile += ' **(Ajuste)**: Ya que tu familia preferida es Dulce, hemos incorporado Clavo y Caramelo para potenciar la calidez y el aspecto gourmand.';
+                }
+            }
+
+
+            // Mostrar Resultados
+            document.getElementById('result-emotion').textContent = recommendation.emotion;
+            document.getElementById('result-profile').textContent = recommendation.profile;
+            document.getElementById('emotive-message').textContent = recommendation.emotiveMessage;
+
+            // Generar la imagen de la vela con la información de la marca
+            generateCandleImage(brandName, recommendation.colorName, recommendation.aroma, recommendation.colorHex, recommendation.emotiveMessage, customCandleShape);
+
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+        }
+
+        // Función para generar la imagen de la vela
+        function generateCandleImage(brandName, colorName, aroma, colorHex, emotiveMessage, shape) {
+            const candleImageContainer = document.getElementById('candle-image-container');
+            candleImageContainer.innerHTML = '<p class="text-lumina-text/70 mb-2 font-body">Cargando tu vela personalizada...</p>'; // Mensaje de carga
+
+            const shapeText = shape ? `con la forma específica de ${shape}` : 'en un recipiente de vidrio cilíndrico elegante';
+            
+            // Prompt mejorado para la IA generadora de imágenes
+            const prompt = `Renderizado 3D fotorrealista de una vela de cera en color ${colorName} (HEX: ${colorHex}) ${shapeText}. La vela debe tener una etiqueta elegante que muestre el logo "LUMINA" arriba, "${brandName}" en el centro en fuente sofisticada, y "${aroma}" debajo. Ambiente interior con iluminación suave que refleje la emoción de la vela. El mensaje "${emotiveMessage}" debe aparecer de forma elegante en el render.`;
+
+            // Aquí se inserta el marcador para la generación de la imagen
+            candleImageContainer.innerHTML = `
+            <p class="text-sm text-lumina-text/70 mb-2 font-body">Aquí está la representación de tu vela ideal:</p>
+            <div style="background-color:${colorHex}; border-radius: 12px; padding: 15px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <img src="${`http://googleusercontent.com/image_generation_content/3`}" alt="Vela Personalizada para ${brandName}" class="rounded-lg max-w-full h-auto result-candle" style="max-height: 350px;">
+            </div>
+            `;
+            // Nota: El mensaje emotivo ya está en su propia sección en el HTML fuera del contenedor de la imagen.
+        }
+
+        // Función auxiliar para invertir el color del texto para que sea legible sobre el fondo de la vela
+        function invertColor(hex, bw) {
+            if (hex.indexOf('#') === 0) {
+                hex = hex.slice(1);
+            }
+            // convert R,G,B into a decimal value
+            const r = parseInt(hex.slice(0, 2), 16);
+            const g = parseInt(hex.slice(2, 4), 16);
+            const b = parseInt(hex.slice(4, 6), 16);
+            if (bw) {
+                // http://stackoverflow.com/a/3943023/112731
+                return (r * 0.299 + g * 0.587 + b * 0.114) > 186 ? '#000000' : '#FFFFFF';
+            }
+            // invert color components
+            const r_inv = (255 - r).toString(16);
+            const g_inv = (255 - g).toString(16);
+            const b_inv = (255 - b).toString(16);
+            // pad each with zeros and return
+            return "#" + padZero(r_inv) + padZero(g_inv) + padZero(b_inv);
+        }
+
+        function padZero(str, len) {
+            len = len || 2;
+            const zeros = new Array(len).join('0');
+            return (zeros + str).slice(-len);
+        }
+
+
+        function resetQuiz() {
+            document.getElementById('brand_name').value = '';
+            document.getElementById('brand_description').value = '';
+            document.getElementById('style').value = '';
+            document.getElementById('emotion').value = '';
+            document.getElementById('scent_family').value = '';
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+            document.getElementById('candle-image-container').innerHTML = ''; // Limpiar la imagen al reiniciar
+        }
+    </script>
+</body>
+</html>
