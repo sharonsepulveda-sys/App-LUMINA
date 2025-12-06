@@ -1,42 +1,34 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Hello, World!</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-      <h1 class="title">Hello World! </h1>
-      <p id="currentTime"></p>
-      <script src="script.js"></script>
-  </body>
-</html><!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUMINA - Asesor de Marca Olfativo con IA</title>
-    <!-- Carga de Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
-    <!-- Carga de Google Fonts para Playfair Display y Lora --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de Google Fonts para Playfair Display y Lora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     
-    <!-- Configuración de color y fuente de Tailwind --><script>
+    <!-- Configuración de color y fuente de Tailwind -->
+    <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         'lumina-bg': '#F8F4E3',       // Beige muy claro, casi blanco roto
-                        'lumina-card': '#FFFFFF',     // Blanco puro para las tarjetas
-                        'lumina-text': '#5C4033',     // Marrón oscuro para texto principal
-                        'lumina-accent': '#B8860B',   // Dorado medio para acentos y botones
-                        'lumina-highlight': '#DAA520',// Dorado más brillante para hover
-                        'lumina-soft': '#EADDCA',     // Beige suave para elementos secundarios
+                        'lumina-card': '#FFFFFF',      // Blanco puro para las tarjetas
+                        'lumina-text': '#5C4033',      // Marrón oscuro para texto principal
+                        'lumina-accent': '#B8860B',    // Dorado medio para acentos y botones
+                        'lumina-highlight': '#DAA520', // Dorado más brillante para hover
+                        'lumina-soft': '#EADDCA',      // Beige suave para elementos secundarios
                         'slate-grey': '#708090',      // Existente para velas exclusivas
-                        'nude-warm': '#E0C9B3',       // Existente para velas minimalistas
-                        'mint-green': '#A8E6CF',      // Existente para velas relajantes
-                        'vibrant-orange': '#FF8C00',  // Existente para velas vibrantes
-                        'medical-white': '#F0FFFF',   // Blanco médico
-                        'caramel-toast': '#964B00',   // Caramelo tostado
+                        'nude-warm': '#E0C9B3',        // Existente para velas minimalistas
+                        'mint-green': '#A8E6CF',       // Existente para velas relajantes
+                        'vibrant-orange': '#FF8C00',   // Existente para velas vibrantes
+                        'medical-white': '#F0FFFF',    // Blanco médico
+                        'caramel-toast': '#964B00',    // Caramelo tostado
                     },
                     fontFamily: {
                         display: ['"Playfair Display"', 'serif'], // Para títulos grandes
@@ -48,6 +40,10 @@
     </script>
     <style>
         /* Estilos personalizados heredados y ajustados */
+        body {
+            /* Asegura que body use el color de fondo definido en tailwind.config */
+            background-color: var(--lumina-bg); 
+        }
         .card-shadow {
             box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 6px 6px -3px rgba(0, 0, 0, 0.03);
         }
@@ -72,12 +68,14 @@
         <div id="quiz-section">
             <div class="space-y-6">
 
-                <!-- Campo para el nombre de la Marca --><div>
+                <!-- Campo para el nombre de la Marca -->
+                <div>
                     <label for="brand_name" class="block text-lg font-display text-lumina-text mb-2">Nombre de tu Marca:</label>
                     <input type="text" id="brand_name" class="w-full p-3 border border-lumina-soft rounded-lg focus:ring-lumina-accent focus:border-lumina-accent transition duration-150 bg-lumina-bg text-lumina-text placeholder-lumina-text/60" placeholder="Ej: Éclat Noir">
                 </div>
 
-                <!-- Nuevo: Campo para la descripción de la Marca --><div>
+                <!-- Nuevo: Campo para la descripción de la Marca -->
+                <div>
                     <label for="brand_description" class="block text-lg font-display text-lumina-text mb-2">De qué trata tu marca (Ej: Odontología estética, Pastelería gourmet, etc.):</label>
                     <textarea id="brand_description" rows="3" class="w-full p-3 border border-lumina-soft rounded-lg focus:ring-lumina-accent focus:border-lumina-accent transition duration-150 bg-lumina-bg text-lumina-text placeholder-lumina-text/60" placeholder="Describe brevemente el nicho o servicio principal de tu negocio. (Opcional)"></textarea>
                 </div>
@@ -129,8 +127,10 @@
         <div id="result-section" class="hidden">
             <h3 class="text-3xl font-bold font-display text-lumina-text text-center mb-6">Tu Vela LUMINA Recomendada</h3>
             
-            <!-- Contenedor para la imagen generada --><div id="candle-image-container" class="mb-6 text-center">
-                <!-- La imagen de la vela se insertará aquí --></div>
+            <!-- Contenedor para la imagen generada -->
+            <div id="candle-image-container" class="mb-6 text-center">
+                <!-- La imagen de la vela se insertará aquí -->
+            </div>
 
             <div class="space-y-4">
                 <div>
@@ -141,7 +141,8 @@
                     <p class="text-sm font-body text-lumina-text/70 uppercase">Perfil Olfativo (Recomendación IA)</p>
                     <p id="result-profile" class="text-base font-body text-lumina-text"></p>
                 </div>
-                <!-- Mensaje emotivo --><div class="mt-6 p-4 bg-lumina-soft rounded-lg italic text-lumina-text">
+                <!-- Mensaje emotivo -->
+                <div class="mt-6 p-4 bg-lumina-soft rounded-lg italic text-lumina-text">
                     <p id="emotive-message" class="text-lg font-body font-medium"></p>
                 </div>
             </div>
@@ -161,6 +162,7 @@
             const scent_family = document.getElementById('scent_family').value;
             const errorMessage = document.getElementById('error-message');
 
+            // Validación: Requiere nombre Y (descripción O las tres preguntas)
             if (!brandName || (!brandDescription && (!style || !emotion || !scent_family))) {
                 errorMessage.classList.remove('hidden');
                 return;
@@ -201,13 +203,13 @@
                 recommendation.profile = 'El objetivo es el deleite. Aromas de **Vainilla, Caramelo y Canela** crean una atmósfera acogedora y apetecible. El color Caramelo Tostado y la forma de pastel invitan a la indulgencia y a la calidez del hogar.';
                 recommendation.emotiveMessage = `Que el dulce aroma de ${brandName} sea el secreto mejor guardado de tus clientes, endulzando cada momento y creando memorias deliciosas.`;
             } else if (brandDescription.includes('spa') || brandDescription.includes('relax') || brandDescription.includes('masajes') || brandDescription.includes('bienestar')) {
-                 customCandleShape = 'en forma de piedra de río pulida y suave';
-                 recommendation.emotion = 'Relajación Profunda y Armonía';
-                 recommendation.colorName = 'Verde Salvia Calmante';
-                 recommendation.colorHex = '#A2C5A2';
-                 recommendation.aroma = 'Lavanda, Sándalo y Bergamota';
-                 recommendation.profile = 'Para un spa o centro de bienestar, la IA selecciona una combinación de **Lavanda** para la calma, **Sándalo** para la meditación y **Bergamota** para elevar el espíritu. El color Verde Salvia y la forma de piedra pulida inducen a un estado de serenidad y conexión natural.';
-                 recommendation.emotiveMessage = `Que la esencia de ${brandName} purifique tu espíritu y calme tu mente, invitándote a un viaje de total armonía y renovación.`;
+                    customCandleShape = 'en forma de piedra de río pulida y suave';
+                    recommendation.emotion = 'Relajación Profunda y Armonía';
+                    recommendation.colorName = 'Verde Salvia Calmante';
+                    recommendation.colorHex = '#A2C5A2';
+                    recommendation.aroma = 'Lavanda, Sándalo y Bergamota';
+                    recommendation.profile = 'Para un spa o centro de bienestar, la IA selecciona una combinación de **Lavanda** para la calma, **Sándalo** para la meditación y **Bergamota** para elevar el espíritu. El color Verde Salvia y la forma de piedra pulida inducen a un estado de serenidad y conexión natural.';
+                    recommendation.emotiveMessage = `Que la esencia de ${brandName} purifique tu espíritu y calme tu mente, invitándote a un viaje de total armonía y renovación.`;
             }
 
 
@@ -273,50 +275,136 @@
             document.getElementById('emotive-message').textContent = recommendation.emotiveMessage;
 
             // Generar la imagen de la vela con la información de la marca
-            generateCandleImage(brandName, recommendation.colorName, recommendation.aroma, recommendation.colorHex, recommendation.emotiveMessage, customCandleShape);
+            generateCandleImage(brandName, recommendation.colorName, recommendation.aroma, recommendation.colorHex, recommendation.emotiveMessage, customCandleShape, style, emotion);
 
             document.getElementById('quiz-section').classList.add('hidden');
             document.getElementById('result-section').classList.remove('hidden');
         }
 
-        // Función para generar la imagen de la vela
-        function generateCandleImage(brandName, colorName, aroma, colorHex, emotiveMessage, shape) {
+        // Función para generar la imagen de la vela - AHORA CON ESTILO VISUAL DETALLADO
+        function generateCandleImage(brandName, colorName, aroma, colorHex, emotiveMessage, shape, style, emotion) {
             const candleImageContainer = document.getElementById('candle-image-container');
             candleImageContainer.innerHTML = '<p class="text-lumina-text/70 mb-2 font-body">Cargando tu vela personalizada...</p>'; // Mensaje de carga
 
-            const shapeText = shape ? `con la forma específica de ${shape}` : 'en un recipiente de vidrio cilíndrico elegante';
+            let containerDescription = '';
+            let visualContext = '';
+
+            // Lógica para describir el estilo visual en detalle
+            if (shape && shape !== 'en un recipiente de vidrio cilíndrico elegante') {
+                // Caso específico de nicho (Odonto, Pastelería, Spa)
+                containerDescription = shape; // Ya usa la forma específica
+                visualContext = 'Fondo minimalista y limpio para resaltar la forma. Fotografía de producto en estudio.';
+            } else if (style === 'luxurious' || emotion === 'exclusivity') {
+                containerDescription = 'en un recipiente de vidrio negro opaco con tapa metálica dorada,';
+                visualContext = 'Iluminación dramática, superficie de mármol pulido y pulcro, con un anillo de oro delgado alrededor de la base de la vela. Fotografía de producto de alta gama.';
+            } else if (style === 'minimalist' || emotion === 'peace') {
+                containerDescription = 'en una jarra de cerámica blanca mate con una tapa de madera clara de bambú,';
+                visualContext = 'Luz natural y suave, fondo de lino texturizado y una pequeña rama de eucalipto seco al lado. Estilo nórdico y minimalista.';
+            } else if (style === 'vibrant' || emotion === 'energy') {
+                containerDescription = 'en un recipiente de cristal transparente con un diseño geométrico,';
+                visualContext = 'Iluminación brillante y dinámica, fondo de color audaz (ej. cian o magenta) que contraste. Efecto de neblina energética.';
+            } else if (style === 'relaxing' || emotion === 'warmth') {
+                containerDescription = 'en un frasco de terracota texturizada con tapa de madera rústica,';
+                visualContext = 'Iluminación cálida y difusa, fondo de madera recuperada, hojas secas de lavanda decorando la cera. Ambiente Hygge y acogedor.';
+            } else {
+                // Fallback genérico si faltan datos del quiz
+                containerDescription = 'en un recipiente de vidrio cilíndrico elegante';
+                visualContext = 'Fotografía de estudio, iluminación balanceada.';
+            }
             
             // Prompt mejorado para la IA generadora de imágenes
-            const prompt = `Renderizado 3D fotorrealista de una vela de cera en color ${colorName} (HEX: ${colorHex}) ${shapeText}. La vela debe tener una etiqueta elegante que muestre el logo "LUMINA" arriba, "${brandName}" en el centro en fuente sofisticada, y "${aroma}" debajo. Ambiente interior con iluminación suave que refleje la emoción de la vela. El mensaje "${emotiveMessage}" debe aparecer de forma elegante en el render.`;
+            const prompt = `Renderizado 3D fotorrealista de una vela de cera en color ${colorName} (HEX: ${colorHex}) ${containerDescription}. La vela debe tener una etiqueta elegante que muestre el logo "LUMINA" arriba, "${brandName}" en el centro en fuente sofisticada, y "${aroma}" debajo. ${visualContext} El mensaje "${emotiveMessage}" debe aparecer de forma sutil en el render como texto de apoyo.`;
+            
+            // Usamos la API de generación de imágenes (imagen-4.0-generate-001)
 
-            // Aquí se inserta el marcador para la generación de la imagen
+            // 1. Mostrar estado de carga
             candleImageContainer.innerHTML = `
-            <p class="text-sm text-lumina-text/70 mb-2 font-body">Aquí está la representación de tu vela ideal:</p>
-            <div style="background-color:${colorHex}; border-radius: 12px; padding: 15px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                <img src="${`http://googleusercontent.com/image_generation_content/3`}" alt="Vela Personalizada para ${brandName}" class="rounded-lg max-w-full h-auto result-candle" style="max-height: 350px;">
-            </div>
+                <div class="flex flex-col items-center justify-center p-6 bg-lumina-soft rounded-xl">
+                    <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-lumina-accent" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <p class="mt-3 text-lg font-body text-lumina-text/90">Generando diseño olfativo...</p>
+                    <p class="mt-1 text-sm text-lumina-text/60 italic">Esto puede tomar unos segundos.</p>
+                </div>
             `;
-            // Nota: El mensaje emotivo ya está en su propia sección en el HTML fuera del contenedor de la imagen.
+
+            // 2. Lógica de la llamada a la API con backoff
+            const apiKey = ""; // Canvas proporcionará la clave en tiempo de ejecución
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+
+            const payload = { 
+                instances: [{ prompt: prompt }], 
+                parameters: { "sampleCount": 1 } 
+            };
+
+            const maxRetries = 5;
+            let currentRetry = 0;
+
+            async function fetchWithRetry() {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.status === 429 && currentRetry < maxRetries) {
+                        const delay = Math.pow(2, currentRetry) * 1000;
+                        currentRetry++;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return fetchWithRetry();
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
+                        const base64Data = result.predictions[0].bytesBase64Encoded;
+                        const imageUrl = `data:image/png;base64,${base64Data}`;
+                        
+                        // 3. Mostrar la imagen generada
+                        candleImageContainer.innerHTML = `
+                            <p class="text-sm text-lumina-text/70 mb-2 font-body">Representación de tu vela ideal:</p>
+                            <div style="border-radius: 12px; padding: 15px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                                <img src="${imageUrl}" alt="Vela Personalizada para ${brandName}" class="rounded-lg w-full result-candle mx-auto" style="max-height: 350px; width: auto; object-fit: cover;">
+                            </div>
+                        `;
+                    } else {
+                        throw new Error("Respuesta de IA incompleta o sin imagen.");
+                    }
+
+                } catch (error) {
+                    console.error("Error al generar la imagen:", error);
+                    candleImageContainer.innerHTML = `
+                        <div class="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                            <p class="font-bold">Error en la Generación Visual</p>
+                            <p class="text-sm">No pudimos crear la imagen de tu vela en este momento. Inténtalo de nuevo más tarde.</p>
+                        </div>
+                    `;
+                }
+            }
+
+            fetchWithRetry();
         }
 
-        // Función auxiliar para invertir el color del texto para que sea legible sobre el fondo de la vela
+        // Función auxiliar para invertir el color del texto (Mantenida aunque no se use directamente)
         function invertColor(hex, bw) {
             if (hex.indexOf('#') === 0) {
                 hex = hex.slice(1);
             }
-            // convert R,G,B into a decimal value
             const r = parseInt(hex.slice(0, 2), 16);
             const g = parseInt(hex.slice(2, 4), 16);
             const b = parseInt(hex.slice(4, 6), 16);
             if (bw) {
-                // http://stackoverflow.com/a/3943023/112731
                 return (r * 0.299 + g * 0.587 + b * 0.114) > 186 ? '#000000' : '#FFFFFF';
             }
-            // invert color components
             const r_inv = (255 - r).toString(16);
             const g_inv = (255 - g).toString(16);
             const b_inv = (255 - b).toString(16);
-            // pad each with zeros and return
             return "#" + padZero(r_inv) + padZero(g_inv) + padZero(b_inv);
         }
 
